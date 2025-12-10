@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Teko:wght@300..700&family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-heading: 'Bebas Neue', sans-serif;
+  --font-sans: 'Arvo', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Teko', sans-serif;
+}
+
+:root {
+  /* Color variables */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --accent: #3b82f6;
+  --success: #10b981;
+  --danger: #ef4444;
+  --border: #475569;
+  --purple-accent: #8b5cf6;
+
+  /* Font rendering */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply max-w-7xl mx-auto font-(--font-sans) bg-(--bg-primary) text-(--text-primary) leading-[1.6] font-normal;  
+}
+
+.app {
+  @apply min-h-screen flex flex-col;
+}
+
+.app-header {
+  @apply flex flex-col items-center justify-center bg-(--bg-secondary) border-b-2 border-(--border) pt-10 pb-8 px-4;
+}
+
+.app-header h1 span {
+  @apply mb-2 bg-linear-to-r from-(--accent) to-(--purple-accent) bg-clip-text text-transparent;
+}
+
+.app-header p {
+  @apply text-sm md:text-base text-(--text-secondary);
+}
+
+.game-container {
+  @apply flex-1 flex justify-center md:gap-8 py-8 w-full border-l border-r border-(--border);
+}
+
+.dartboard-container {
+  @apply lg:max-h-[650px] max-w-[600px] flex flex-1 items-center justify-center p-4 border border-solid rounded-lg 
+  border-(--bg-card) outline outline-solid outline-(--bg-card) outline-offset-[-1rem] relative;
+}
+
+.dartboard-container canvas {
+  @apply max-w-full h-auto;
+}
+
+.score-panel {
+  @apply w-[350px] flex flex-col gap-6 order-1 md:order-0;
+}
+
+.score-card {
+  @apply bg-(--bg-card) rounded-xl p-8 border-2 border-(--border) text-center;
+}
+
+.score-card h2 {
+  @apply text-(--text-secondary) mb-4 uppercase tracking-wide;
+}
+
+.total-score {
+  @apply text-[4rem] font-bold text-(--accent) mb-2;
+}
+
+.throws-count {
+  @apply text-(--text-secondary) text-base;
+}
+
+.recent-throws {
+  @apply max-h-[300px] bg-(--bg-card) border-2 border-(--border) rounded-lg p-4 flex flex-col flex-1 overflow-hidden 
+  overflow-y-auto list-none pr-2;
+  scrollbar-gutter: stable;
+
+  /* For Firefox */
+  /* scrollbar-width: thin; */
+  /* scrollbar-color: var(--border) var(--bg-secondary); */
+}
+
+/* Custom scrollbar for recent throws */
+.recent-throws::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.recent-throws::-webkit-scrollbar-track {
+  @apply bg-(--bg-secondary) rounded-sm;
+}
+
+.recent-throws::-webkit-scrollbar-thumb {
+  @apply bg-(--border) rounded-sm;
+}
+
+.recent-throws::-webkit-scrollbar-thumb:hover {
+  @apply bg-(--accent);
+}
+
+.recent-throws h3 {
+  @apply mb-4 text-(--text-secondary) uppercase tracking-wide;
+}
+
+.no-throws {
+  @apply text-(--text-secondary) italic text-center py-8;
+}
+
+.throw-item {
+  @apply flex justify-between items-center py-3 px-4 mb-2 bg-(--bg-secondary) rounded-lg border-l-4 border-l-(--accent) 
+  transition-transform duration-200;
+}
+
+.throw-item:hover {
+  @apply translate-x-1;
+}
+
+.throw-item.bull {
+  @apply border-l-amber-400 bg-linear-to-r from-amber-400/10 to-(--bg-secondary);
+}
+
+.throw-item.outer-bull {
+  @apply border-l-(--success);
+}
+
+.throw-item.triple {
+  @apply border-l-(--purple-accent);
+}
+
+.throw-item.double {
+  @apply border-l-pink-500; /* #ec4899 */
+}
+
+.throw-item.miss {
+  @apply border-l-(--danger) opacity-60;
+}
+
+.throw-score {
+  @apply text-2xl font-bold min-w-[50px];
+}
+
+.throw-description {
+  @apply text-(--text-secondary) flex-1 text-right;
+}
+
+.reset-button {
+  @apply bg-(--accent) text-white border-none py-4 px-8 text-base font-semibold rounded-lg cursor-pointer 
+  transition-all duration-300 uppercase tracking-wide;
+}
+
+.reset-button:hover {
+  @apply bg-blue-600 -translate-y-0.5;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.reset-button:active {
+  @apply translate-y-0;
+}
+
+.app-footer {
+  @apply text-center p-4 bg-(--bg-secondary) border-t-2 border-(--border) text-(--text-secondary);
+}
+
+/* Mobile warning - only visible on screens < 768px */
+.mobile-only {
+  @apply hidden;
+}
+
+@media (max-width: 767px) {
+  .mobile-only {
+    @apply block;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .game-container {
+    @apply flex-col items-center;
+  }
+
+  .score-panel {
+    @apply w-full max-w-[600px];
+  }
+
+  .dartboard-container canvas {
+    @apply max-w-full h-auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    @apply py-8 px-4;
+  }
+
+  .app-header h1 span {
+    @apply text-[2rem] leading-[1.2];
+  }
+
+  .app-header p {
+    @apply text-[0.9rem] text-center;
+  }
+
+  /* Better dartboard spacing on mobile */
+  .dartboard-container {
+    @apply p-2 -mx-2 my-0;
+  }
+
+  .dartboard-container canvas {
+    @apply max-w-full h-auto;
+  }
+
+  /* Score card adjustments */
+  .score-card h2 {
+    @apply text-base;
+  }
+
+  .total-score {
+    @apply text-5xl;
+  }
+
+  .throws-count {
+    @apply text-[0.9rem];
+  }
+
+  /* Touch-friendly throw items */
+  .throw-item {
+    @apply p-[0.875rem] px-4;
+  }
+
+  .throw-score {
+    @apply text-[1.3rem];
+  }
+
+  .throw-description {
+    @apply text-[0.9rem];
+  }
+
+  /* Better spacing */
+  .game-container {
+    @apply py-4 px-3 gap-4;
+  }
+
+  .score-panel {
+    @apply gap-4;
+  }
+
+  /* Recent throws on mobile */
+  .recent-throws {
+    @apply max-h-[250px];
+  }
+}
+
+/* Extra small devices (phones in portrait, less than 375px) */
+@media (max-width: 374px) {
+  .total-score {
+    @apply text-[2.5rem];
+  }
+
+  .game-container {
+    @apply py-3 px-2;
+  }
+}
+
+/* Subtle shadow pulse for active buttons */
+@keyframes pulse-shadow {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.1);
+  }
+}

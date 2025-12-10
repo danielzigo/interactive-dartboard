@@ -1,0 +1,19 @@
+# Ignore dependencies and build output.
+node_modules/
+dist/
+build/
+
+# Ignore public assets.
+public/
+
+# Ignore lock files.
+package-lock.json
+
+# Ignore configuration files.
+.vscode/
+tsconfig.json
+tsconfig.app.json
+tsconfig.node.json
+vite.config.ts
+.prettierrc
+eslint.config.js
