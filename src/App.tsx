@@ -155,8 +155,6 @@ function App() {
           {popups.map((popup) => (
             <ScorePopup
               key={popup.id}
-              x={popup.x}
-              y={popup.y}
               score={popup.score}
               description={popup.description}
               region={popup.region}
