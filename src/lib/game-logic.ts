@@ -97,9 +97,20 @@ export function process501Throw(
     };
   }
 
-  // Check for bust (went below 0, or hit exactly 0 but not on a double, or left with 1)
-  // [review this rule - if it's complete]
-  if (newScore < 0 || newScore === 1 || (newScore === 0 && !isDouble)) {
+  // Check for score = 1 (impossible to finish condition - game over)
+  if (newScore === 1) {
+    return {
+      ...currentState,
+      score: 1,
+      dartsThrown: newDartsThrown,
+      isGameOver: true,
+      isWinner: false,
+      isBust: false,
+    };
+  }
+
+  // Check for other bust conditions (went below 0 or hit exactly 0 but not on a double)
+  if (newScore < 0 || (newScore === 0 && !isDouble)) {
     return {
       ...currentState,
       dartsThrown: newDartsThrown,

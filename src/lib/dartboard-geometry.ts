@@ -77,7 +77,7 @@ export function calculateScore(
   if (scaledRadius <= DARTBOARD_DIMENSIONS.BULL) {
     return {
       score: 50,
-      multiplier: 1,
+      multiplier: 2,
       segmentNumber: 0,
       region: 'bull',
       description: "Bullseye! 50 points",

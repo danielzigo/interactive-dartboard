@@ -15,13 +15,14 @@ interface DartboardStageProps {
   scale: number;
   debug: boolean;
   onThrow: (t: DartThrow) => void;
+  isGameOver: boolean;
   children?: React.ReactNode;
 }
 
-export function DartboardStage({ width, height, scale, debug, onThrow, children }: DartboardStageProps) {
+export function DartboardStage({ width, height, scale, debug, onThrow, isGameOver, children }: DartboardStageProps) {
   return (
     <div className="dartboard-container" style={{ position: 'relative' }}>
-      <Dartboard width={width} height={height} onDartThrow={onThrow} />
+      <Dartboard width={width} height={height} onDartThrow={onThrow} isGameOver={isGameOver} />
       {debug && <DartboardDebug width={width} height={height} scale={scale} />}
       {children}
     </div>

@@ -35,6 +35,10 @@ export function Game501ScoreCard({
 }: Game501ScoreCardProps) {
   const scoreColor = score <= 100 ? '#fbbf24' : score <= 170 ? '#10b981' : '#3b82f6';
 
+  // Check for problematic scores
+  const isImpossible = score === 1; // Score = 1, impossible to finish. Game over.
+  const needsSetup = score > 1 && score < 40 && score % 2 !== 0 && !isGameOver; // Odd numbers below 40... needs careful setup but not impossible
+
   // Animate score changes with counting effect
   const [displayScore, setDisplayScore] = useState(score);
 
@@ -64,8 +68,8 @@ export function Game501ScoreCard({
   }, [score]);
 
   return (
-    <div className="score-card">
-      <h2 className="font-heading text-2xl">501 Game</h2>
+    <div className="score-card flex flex-col gap-2 md:gap-0">
+      <h2 className="font-heading text-3xl">501 Game</h2>
 
       {/* Animated Score Display */}
       <motion.div
@@ -227,6 +231,56 @@ export function Game501ScoreCard({
                 }}
               />
             ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Game Over on score = 1 */}
+      <AnimatePresence>
+        {isGameOver && !isWinner && score === 1 && (
+          <motion.div
+            initial={{ scale: 0, y: 10 }}
+            animate={{ scale: [1, 1.05, 1], y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            style={{
+              marginTop: '0.75rem',
+              padding: '0.8rem 1rem',
+              background: 'rgba(0, 0, 0, 0.9)', // Dark background
+              border: '2px solid #ef4444', // Red border
+              borderRadius: '8px',
+              boxShadow: '0 0 25px rgba(239, 68, 68, 0.5)', // Red glow
+              color: '#ffffff',
+              fontWeight: 'bold',
+              fontSize: '1.15rem',
+              textAlign: 'center',
+            }}
+          >
+            ❌ Game Over! <span style={{ color: '#94a3b8' }}>Score is 1.</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Odd number warning - Orange */}
+      <AnimatePresence>
+        {!isGameOver && !isImpossible && needsSetup && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              marginTop: '1rem',
+              color: '#ffffff',
+              fontWeight: 'bold',
+              fontSize: '0.85rem',
+              padding: '0.6rem',
+              background: 'rgba(251, 146, 60, 0.25)', // Orange
+              borderRadius: '6px',
+              border: '1px solid rgba(251, 146, 60, 0.6)',
+              textAlign: 'center',
+            }}
+          >
+            ⚠️ Odd number - Set up your double!
           </motion.div>
         )}
       </AnimatePresence>

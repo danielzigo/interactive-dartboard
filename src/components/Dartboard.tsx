@@ -17,6 +17,7 @@ interface DartboardProps {
     region: string;
     description: string;
   }) => void;
+  isGameOver?: boolean;
 }
 
 interface Dart {
@@ -25,7 +26,7 @@ interface Dart {
   timestamp: number; // For animation
 }
 
-export function Dartboard({ width = 600, height = 600, onDartThrow }: DartboardProps) {
+export function Dartboard({ width = 600, height = 600, onDartThrow, isGameOver }: DartboardProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [darts, setDarts] = useState<Dart[]>([]);
   const animationFrameRef = useRef<number | undefined>(undefined);
@@ -126,6 +127,11 @@ export function Dartboard({ width = 600, height = 600, onDartThrow }: DartboardP
 
   // Handle canvas click
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    // Don't process/allow clicks if game is over
+    if (isGameOver) {
+      return;
+    }
+
     event.preventDefault(); // Prevent any default behavior
 
     const canvas = canvasRef.current;
@@ -176,7 +182,8 @@ export function Dartboard({ width = 600, height = 600, onDartThrow }: DartboardP
       height={height}
       onClick={handleCanvasClick}
       style={{
-        cursor: 'crosshair',
+        cursor: isGameOver ? 'not-allowed' : 'crosshair',
+        opacity: isGameOver ? 0.4 : 1, // Dim the board/canvas when it's game over
         backgroundColor: '#0f172a',
         userSelect: 'none',
         WebkitUserSelect: 'none',
@@ -330,30 +337,35 @@ function drawWedge(
 function drawDart(ctx: CanvasRenderingContext2D, x: number, y: number) {
   ctx.save();
 
-  // Dart colors - blue/white for visibility
-  const dartBody = '#C0C0C0'; // Silver barrel
-  const dartFlight = '#4A90E2'; // Blue flight (visible on red and green)
-  const dartFlightEdge = '#2563EB'; // Darker blue edge
+  // Dart colors - 'neon cyan' (more visible)
+  const dartBody = '#00BCD4'; // Cyan barrel
+  const dartFlight = '#00E5FF'; // Bright cyan flight
+  const dartFlightEdge = '#0097A7'; // Darker cyan edge
   const dartTip = '#1a1a1a'; // Dark tip
 
-  // Draw shadow (bigger)
+  // Draw shadow
   ctx.beginPath();
-  ctx.arc(x + 3, y + 3, 7, 0, 2 * Math.PI);
+  ctx.arc(x + 3, y + 3, 8, 0, 2 * Math.PI);
   ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
   ctx.fill();
 
-  // Draw flight (feathers) - 3 triangular fins (larger)
-  for (let i = 0; i < 3; i++) {
-    const angle = (i * 120 * Math.PI) / 180;
+  // Rotate the flight of the dart
+  ctx.translate(x, y);
+  ctx.rotate(Math.PI / 4); // 45 degrees
+  ctx.translate(-x, -y);
+
+  // Draw flight - 4 fins in X shape (for more realistic overhead view)
+  for (let i = 0; i < 4; i++) {
+    const angle = (i * 90 * Math.PI) / 180; // 4 fins at 90° intervals
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(angle);
 
-    // Flight fin (bigger)
+    // Flight fin
     ctx.beginPath();
-    ctx.moveTo(-12, 0); // Extended back
-    ctx.lineTo(-4, -6); // Wider
-    ctx.lineTo(-4, 6);
+    ctx.moveTo(-14, 0); // Extended back
+    ctx.lineTo(-7, -5); // Slimmer wings
+    ctx.lineTo(-7, 5); // Same
     ctx.closePath();
     ctx.fillStyle = dartFlight;
     ctx.fill();
@@ -364,24 +376,24 @@ function drawDart(ctx: CanvasRenderingContext2D, x: number, y: number) {
     ctx.restore();
   }
 
-  // Draw dart barrel (body) - bigger
+  // Draw dart barrel (body)
   ctx.beginPath();
-  ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  ctx.arc(x, y, 6, 0, 2 * Math.PI);
   ctx.fillStyle = dartBody;
   ctx.fill();
-  ctx.strokeStyle = '#999';
+  ctx.strokeStyle = '#0097A7';
   ctx.lineWidth = 0.8;
   ctx.stroke();
 
   // Add metallic shine effect
   ctx.beginPath();
-  ctx.arc(x - 1.5, y - 1.5, 2, 0, 2 * Math.PI);
+  ctx.arc(x - 1.5, y - 1.5, 2.5, 0, 2 * Math.PI);
   ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
   ctx.fill();
 
-  // Draw dart tip (point) - slightly bigger
+  // Draw dart tip (point)
   ctx.beginPath();
-  ctx.arc(x, y, 1.8, 0, 2 * Math.PI);
+  ctx.arc(x, y, 2, 0, 2 * Math.PI);
   ctx.fillStyle = dartTip;
   ctx.fill();
 
