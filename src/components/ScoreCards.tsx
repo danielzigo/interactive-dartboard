@@ -18,7 +18,7 @@ interface Game501ScoreCardProps {
 export function PracticeScoreCard({ total, throwsCount }: PracticeScoreCardProps) {
   return (
     <div className="score-card">
-      <h2 className="font-heading text-2xl">Total Score</h2>
+      <h2 className="font-heading text-3xl">Total Score</h2>
       <div className="total-score font-mono">{total}</div>
       <div className="throws-count">Throws: {throwsCount}</div>
     </div>
