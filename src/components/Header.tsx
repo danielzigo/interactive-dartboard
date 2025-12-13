@@ -13,7 +13,7 @@ interface HeaderProps {
 
 export function Header({ icon, title, subtitle, actions, onInfoToggle, isInfoOpen }: HeaderProps) {
   return (
-    <header className="app-header">
+    <header className="app-header relative">
       <div>
         <h1 className="mb-2 md:mb-0 font-heading text-4xl md:text-6xl">
           {' '}
@@ -25,7 +25,7 @@ export function Header({ icon, title, subtitle, actions, onInfoToggle, isInfoOpe
             data-tooltip-id="info-tooltip"
             data-tooltip-content="About"
             onClick={onInfoToggle}
-            className="absolute top-6 right-4 sm:top-11 sm:right-10 xl:right-30 z-60 p-1 rounded-full bg-blue-500 transition-all duration-50 shadow-lg hover:cursor-pointer 
+            className="absolute top-6 right-4 sm:top-11 sm:right-10 z-60 p-1 rounded-full bg-blue-500 transition-all duration-50 shadow-lg hover:cursor-pointer 
             group focus-visible:outline-2 focus-visible:outline-gray-300 focus-visible:outline-offset-2"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}

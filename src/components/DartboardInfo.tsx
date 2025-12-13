@@ -38,7 +38,7 @@ export function DartboardInfo({ isOpen, onClose }: DartboardInfoProps) {
                 stiffness: 200,
                 duration: 0.5,
               }}
-              className="fixed xl:absolute top-0 right-0 w-full sm:w-[500px] h-screen xl:min-h-screen bg-[#232329] border-l-4 border-(--border) z-50 shadow-2xl overflow-y-auto"
+              className="fixed xl:absolute top-0 right-0 w-full sm:w-[500px] xl:right-[calc((100vw-1280px)/2)] h-screen xl:min-h-screen bg-[#232329] border-l-4 border-(--border) z-50 shadow-2xl overflow-y-auto"
             >
               {/* Close button */}
               <motion.button
