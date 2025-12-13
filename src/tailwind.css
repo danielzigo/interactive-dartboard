@@ -219,11 +219,6 @@ body {
     @apply max-w-full h-auto;
   }
 
-  /* Score card adjustments */
-  .score-card h2 {
-    @apply text-base;
-  }
-
   .total-score {
     @apply text-5xl;
   }
