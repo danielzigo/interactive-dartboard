@@ -332,9 +332,9 @@ export function DimensionsTable({ scale }: { scale: number }) {
   ];
 
   return (
-    <div className="bg-slate-800 rounded-xl p-6 my-4 font-mono border-2 border-slate-700">
+    <div className="max-w-xl xl:max-w-3xl mx-auto bg-slate-800 rounded-xl px-2 py-6 md:p-6 my-4 font-mono border-2 border-slate-700">
       <h3 className="text-lg font-semibold text-blue-400 mb-4 uppercase tracking-wider">
-        📏 Dimension Verification
+        📏 Dimensions Verification
       </h3>
 
       <div className="overflow-x-auto">

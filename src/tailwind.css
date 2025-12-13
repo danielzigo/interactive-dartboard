@@ -29,7 +29,7 @@
 }
 
 body {
-  @apply max-w-7xl mx-auto font-(--font-sans) bg-(--bg-primary) text-(--text-primary) leading-[1.6] font-normal;  
+  @apply max-w-7xl mx-auto font-(--font-sans) bg-(--bg-primary) text-(--text-primary) leading-[1.6];
 }
 
 .app {
@@ -46,6 +46,10 @@ body {
 
 .app-header p {
   @apply text-sm md:text-base text-(--text-secondary);
+}
+
+.dimensions-panel {
+  @apply py-0 px-2 md:px-8 border-l border-r border-(--border);
 }
 
 .game-container {

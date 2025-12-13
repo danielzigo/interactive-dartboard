@@ -6,7 +6,7 @@ interface DimensionsPanelProps {
 
 export function DimensionsPanel({ scale }: DimensionsPanelProps) {
   return (
-    <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
+    <div className="dimensions-panel">
       <DimensionsTable scale={scale} />
     </div>
   );
