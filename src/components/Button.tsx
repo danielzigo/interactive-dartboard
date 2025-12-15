@@ -18,7 +18,7 @@ export type ButtonProps = {
   iconActive?: React.ReactNode; // Icon to show when active
   className?: string;
   disabled?: boolean;
-};
+} & React.ComponentPropsWithoutRef<'button'>;
 
 const sizeCls: Record<Size, string> = {
   sm: 'px-4 py-2 text-sm rounded-lg',
@@ -79,6 +79,7 @@ export function Button({
   iconActive,
   className,
   disabled,
+  ...rest
 }: Readonly<ButtonProps>) {
   const prefersReduced = useReducedMotion();
   const [focused, setFocused] = useState(false);
@@ -120,8 +121,25 @@ export function Button({
   // Choose which icon to show
   const displayIcon = active && iconActive ? iconActive : iconLeft;
 
+  // Destructure props to exclude those that conflict with Framer Motion's handlers
+  const {
+    onDrag,
+    onDragStart,
+    onDragEnd,
+    onDragEnter,
+    onDragExit,
+    onDragLeave,
+    onDragOver,
+    onDrop,
+    onAnimationStart,
+    onAnimationEnd,
+    onAnimationIteration,
+    ...safeRest // Props safe to spread onto the motion.button
+  } = rest;
+
   return (
     <motion.button
+      {...safeRest}
       type={type}
       tabIndex={disabled ? -1 : 0}
       initial="rest"

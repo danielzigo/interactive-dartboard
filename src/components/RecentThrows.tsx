@@ -13,8 +13,7 @@ interface RecentThrowsProps {
 export function RecentThrows({ throws }: RecentThrowsProps) {
   return (
     <div className="recent-throws">
-      {/* Last 10 throws */}
-      <h3 className="font-heading text-2xl">Recent Throws</h3>
+      <h3 className="font-heading text-2xl">Last 10 Throws</h3>
       {throws.length === 0 ? (
         <p className="no-throws">No throws yet. Click the dartboard!</p>
       ) : (
